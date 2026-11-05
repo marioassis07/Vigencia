@@ -5,8 +5,7 @@
     --borda:           rgba(255, 255, 255, 0.08);
     --borda-forte:     rgba(255, 255, 255, 0.16);
 
-    --texto:           #eef0f6;
-    --texto-suave:     #9299ad;
+    --texto:           #ffffff;
 
     --vermelho:        #e13a3a;
     --vermelho-claro:  #ff5a54;
@@ -105,13 +104,13 @@ h1, h2, h3 {
     padding: 0;
 }
 .links-menu a {
-    color: var(--texto-suave);
+    color: var(--texto);
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
     transition: color 0.2s ease;
 }
-.links-menu a:hover { color: var(--texto); }
+.links-menu a:hover { color: var(--vermelho-claro); }
 
 .inicio {
     text-align: center;
@@ -137,7 +136,7 @@ h1, h2, h3 {
 }
 .descricao-inicio {
     font-size: clamp(18px, 2.2vw, 23px);
-    color: var(--texto-suave);
+    color: var(--texto);
     max-width: 720px;
     margin: 0 auto 28px;
 }
@@ -156,7 +155,7 @@ h1, h2, h3 {
     margin: 0 auto 36px;
 }
 .titulo-secao h2 { font-size: clamp(30px, 4vw, 42px); font-weight: 700; margin-bottom: 16px; }
-.titulo-secao p { color: var(--texto-suave); font-size: 17px; margin: 0; }
+.titulo-secao p { color: var(--texto); font-size: 17px; margin: 0; }
 
 .titulo-solucao {
     text-align: left;
@@ -170,7 +169,7 @@ h1, h2, h3 {
     margin-top: 24px;
 }
 .texto-solucao p {
-    color: var(--texto-suave);
+    color: var(--texto);
     font-size: 17px;
     margin: 0 0 18px;
 }
@@ -203,7 +202,7 @@ h1, h2, h3 {
 .cartao-funcao h3 { font-size: 16px; margin-bottom: 6px; color: #fff; }
 .cartao-funcao p { color: rgba(255, 255, 255, 0.82); font-size: 13px; line-height: 1.5; margin: 0; }
 
-#painel { padding: 80px 0; }
+#painel { padding: 80px 0; overflow-x: clip; }
 #painel .area-central { max-width: 1280px; }
 .grade-painel {
     display: grid;
@@ -218,7 +217,7 @@ h1, h2, h3 {
 }
 .titulo-painel h2 { color: var(--vermelho-claro); }
 .texto-painel > p {
-    color: var(--texto-suave);
+    color: var(--texto);
     font-size: 17px;
     margin: 0 0 22px;
 }
@@ -231,7 +230,7 @@ h1, h2, h3 {
     gap: 16px;
 }
 .lista-painel li {
-    color: var(--texto-suave);
+    color: var(--texto);
     font-size: 15px;
     line-height: 1.55;
     padding-left: 22px;
@@ -285,7 +284,7 @@ h1, h2, h3 {
     line-height: 1;
     margin-bottom: 14px;
 }
-.cartao-estatistica p { color: var(--texto-suave); font-size: 13px; margin: 0; }
+.cartao-estatistica p { color: var(--texto); font-size: 13px; margin: 0; }
 
 .secao-objetivos { background: var(--fundo-alternado); }
 .titulo-objetivos { margin-bottom: 28px; }
@@ -319,7 +318,7 @@ h1, h2, h3 {
 .cartao-smart:last-child { grid-column: 1 / -1; }
 .cartao-smart:hover { border-color: var(--borda-forte); transform: translateY(-3px); }
 .cartao-smart h3 { font-size: 16px; margin: 1px 0 5px; }
-.cartao-smart p { color: var(--texto-suave); font-size: 13px; line-height: 1.45; margin: 0; }
+.cartao-smart p { color: var(--texto); font-size: 13px; line-height: 1.45; margin: 0; }
 
 .secao-cronograma { background: var(--fundo); }
 .titulo-cronograma { margin-bottom: 28px; }
@@ -405,9 +404,9 @@ h1, h2, h3 {
     letter-spacing: -0.02em;
     color: var(--texto);
 }
-.marca-rodape p { color: var(--texto-suave); font-size: 14px; line-height: 1.6; margin: 8px 0 0; }
+.marca-rodape p { color: var(--texto); font-size: 14px; line-height: 1.6; margin: 8px 0 0; }
 .links-rodape { display: flex; flex-wrap: wrap; gap: 10px 22px; }
-.links-rodape a { color: var(--texto-suave); text-decoration: none; font-size: 14px; transition: color 0.2s ease; }
+.links-rodape a { color: var(--texto); text-decoration: none; font-size: 14px; transition: color 0.2s ease; }
 .links-rodape a:hover { color: var(--vermelho-claro); }
 .base-rodape {
     display: flex;
@@ -419,9 +418,50 @@ h1, h2, h3 {
     padding-top: 20px;
     border-top: 1px solid var(--borda);
 }
-.base-rodape p { color: var(--texto-suave); font-size: 13px; margin: 0; }
-.link-voltar-topo { color: var(--texto-suave); text-decoration: none; font-size: 13px; transition: color 0.2s ease; }
+.base-rodape p { color: var(--texto); font-size: 13px; margin: 0; }
+.link-voltar-topo { color: var(--texto); text-decoration: none; font-size: 13px; transition: color 0.2s ease; }
 .link-voltar-topo:hover { color: var(--vermelho-claro); }
+
+/* Animações ao rolar: o script.js coloca "animar" na seção e depois "visivel" */
+
+/* Animação padrão: o elemento sobe um pouco e aparece.
+   O script.js define a --ordem de cada elemento, para eles entrarem um depois do outro */
+.animar .item-animado {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: calc(var(--ordem) * 0.08s);
+}
+
+/* Animação especial do aplicativo e do painel tático */
+.animar .imagem-app,
+.animar .cartao-funcao,
+.animar .caixa-imagem-painel,
+.animar .lista-painel li {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.animar .imagem-app { transform: scale(0.85); }
+.animar .cartao-funcao,
+.animar .lista-painel li { transform: translateX(-24px); }
+.animar .caixa-imagem-painel { transform: translateX(30px); }
+
+.visivel .item-animado,
+.visivel .imagem-app,
+.visivel .cartao-funcao,
+.visivel .caixa-imagem-painel,
+.visivel .lista-painel li {
+    opacity: 1;
+    transform: none;
+}
+
+/* Os cartões do app e os itens da lista do painel entram um de cada vez */
+.visivel .imagem-app, .visivel .caixa-imagem-painel { transition-delay: 0.15s; }
+.visivel .cartao-funcao:nth-child(1), .visivel .lista-painel li:nth-child(1) { transition-delay: 0.3s; }
+.visivel .cartao-funcao:nth-child(2), .visivel .lista-painel li:nth-child(2) { transition-delay: 0.4s; }
+.visivel .cartao-funcao:nth-child(3), .visivel .lista-painel li:nth-child(3) { transition-delay: 0.5s; }
+.visivel .cartao-funcao:nth-child(4), .visivel .lista-painel li:nth-child(4) { transition-delay: 0.6s; }
+.visivel .cartao-funcao:nth-child(5) { transition-delay: 0.7s; }
 
 @media (max-width: 860px) {
     .links-menu { display: none; }

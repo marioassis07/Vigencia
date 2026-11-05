@@ -14,9 +14,10 @@
     --largura-max:      1120px;
     --arredondamento:   14px;
     --altura-cabecalho: 45px; /* altura do cabeçalho compacto, que aparece ao rolar a página */
+    --altura-cabecalho-topo: 55px; /* altura do cabeçalho no topo da página, antes de rolar */
 
     --fonte: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    --fonte-logo: 'Montserrat', 'Inter', Arial, sans-serif; /* mesma fonte da logo no pitch */
+    --fonte-titulo: 'Montserrat', 'Inter', Arial, sans-serif; /* fonte da logo no pitch: usada nos títulos e no nome da logo */
 }
 
 * { box-sizing: border-box; }
@@ -42,7 +43,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 h1, h2, h3 {
-    font-family: var(--fonte);
+    font-family: var(--fonte-titulo);
     letter-spacing: -0.02em;
     line-height: 1.08;
     margin: 0;
@@ -87,16 +88,17 @@ h1, h2, h3 {
     transform: scaleX(0);
     transform-origin: left;
 }
+/* Barra do topo em 3 colunas: logo à esquerda, links no centro exato da tela
+   e uma coluna vazia à direita, do mesmo tamanho da primeira, para equilibrar */
 .menu-topo {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     gap: 24px;
-    max-width: var(--largura-max);
-    margin: 0 auto;
-    padding: 14px 24px;
+    padding: 14px 32px;
     transition: padding 0.25s ease;
 }
+.menu-topo .logo { justify-self: start; }
 
 /* Cabeçalho compacto: o script.js coloca "rolado" quando a pessoa sai do início */
 .cabecalho { transition: box-shadow 0.25s ease, background 0.25s ease; }
@@ -109,7 +111,7 @@ h1, h2, h3 {
 .escudo-logo { height: 23px; width: auto; position: relative; top: 1px; }
 .nome-logo {
     color: var(--texto);
-    font-family: var(--fonte-logo);
+    font-family: var(--fonte-titulo);
     font-size: 23px;
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -134,12 +136,14 @@ h1, h2, h3 {
 
 .inicio {
     text-align: center;
-    min-height: calc(100vh - var(--altura-cabecalho));
+    min-height: calc(100vh - var(--altura-cabecalho-topo));
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 32px 40px;
+    /* Os links para #home voltam ao topo real da página, sem o cabeçalho cobrir o início */
+    scroll-margin-top: var(--altura-cabecalho-topo);
 }
 
 .escudo-inicio {
@@ -182,7 +186,7 @@ h1, h2, h3 {
     max-width: none;
     margin: 0;
 }
-.titulo-solucao h2 { color: var(--vermelho-texto); }
+.titulo-solucao h2 { color: var(--vermelho); }
 .texto-solucao {
     max-width: 720px;
     text-align: left;
@@ -227,7 +231,7 @@ h1, h2, h3 {
 .cartao-funcao h3 { font-size: 16px; margin-bottom: 6px; color: #fff; }
 .cartao-funcao p { color: rgba(255, 255, 255, 0.82); font-size: 13px; line-height: 1.5; margin: 0; }
 
-#painel { padding: 80px 0; overflow-x: clip; }
+#painel { overflow-x: clip; }
 #painel .area-central { max-width: 1280px; }
 .grade-painel {
     display: grid;
@@ -240,7 +244,7 @@ h1, h2, h3 {
     max-width: none;
     margin: 0 0 20px;
 }
-.titulo-painel h2 { color: var(--vermelho-texto); }
+.titulo-painel h2 { color: var(--vermelho); }
 .texto-painel > p {
     color: var(--texto);
     font-size: 17px;
@@ -273,47 +277,80 @@ h1, h2, h3 {
 }
 .lista-painel strong { color: var(--texto); font-weight: 600; }
 .caixa-imagem-painel { display: flex; justify-content: center; }
+/* O fundo da imagem já é a cor do site. As bordas da direita e de baixo, onde o monitor
+   aparece cortado na imagem original, se esfumam no fundo para o corte não aparecer */
 .caixa-imagem-painel img {
     width: 100%;
-    filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.5));
+    -webkit-mask-image: linear-gradient(to right, #000 86%, transparent), linear-gradient(to bottom, #000 88%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, #000 86%, transparent), linear-gradient(to bottom, #000 88%, transparent);
+    mask-composite: intersect;
 }
 
 .grade-estatisticas {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    max-width: 760px;
+    gap: 20px;
+    max-width: 1000px; /* cartões um pouco mais estreitos que a largura total do conteúdo */
     margin: 0 auto;
 }
 .cartao-estatistica {
+    position: relative;
+    overflow: hidden; /* a faixa vermelha do topo acompanha os cantos arredondados */
     background: var(--fundo-cartao);
     border: 1px solid var(--borda);
-    border-radius: 12px;
-    padding: 36px 20px;
-    min-height: 210px;
+    border-radius: var(--arredondamento);
+    padding: 32px 28px;
+    min-height: 370px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start; /* números alinhados no topo, mesmo com textos de tamanhos diferentes */
     text-align: center;
-    transition: border-color 0.25s ease, transform 0.25s ease;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
+/* Faixa vermelha fina no topo de cada cartão */
+.cartao-estatistica::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--vermelho);
+}
+/* Ao passar o mouse: o cartão sobe e ganha um brilho vermelho suave em volta */
 .cartao-estatistica:hover {
-    border-color: var(--borda-forte);
+    border-color: rgba(141, 14, 14, 0.6);
     transform: translateY(-4px);
+    box-shadow: 0 0 0 1px rgba(141, 14, 14, 0.35), 0 18px 45px rgba(141, 14, 14, 0.28);
+}
+/* Ícone de linha acima do número */
+.icone-estatistica {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 12px;
+    fill: none;
+    stroke: var(--vermelho-texto);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
 }
 .numero-estatistica {
     font-family: var(--fonte);
-    font-size: 36px;
+    font-size: 48px;
     font-weight: 700;
     color: var(--vermelho-texto);
     line-height: 1;
-    margin-bottom: 14px;
+    margin-bottom: 18px;
+    white-space: nowrap; /* "1 a cada 2" não quebra em duas linhas */
 }
-.cartao-estatistica p { color: var(--texto); font-size: 13px; margin: 0; }
+.cartao-estatistica p { color: var(--texto); font-size: 16px; line-height: 1.65; margin: 0; }
 
 .secao-objetivos { background: var(--fundo-alternado); }
 .titulo-objetivos { margin-bottom: 28px; }
-.titulo-objetivos h2 span { color: var(--vermelho-texto); }
+.titulo-objetivos h2 span { color: var(--vermelho); }
 .grade-objetivos {
     display: grid;
     grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
@@ -341,7 +378,6 @@ h1, h2, h3 {
     color: var(--texto);
     font-family: inherit;
     text-align: left;
-    cursor: pointer;
     transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .cartao-smart:last-child { grid-column: 1 / -1; }
@@ -354,7 +390,6 @@ h1, h2, h3 {
     grid-area: 1 / 1;
     display: flex;
     align-items: center;
-    transition: opacity 0.4s ease;
 }
 .frente-smart { gap: 12px; }
 .verso-smart {
@@ -362,21 +397,37 @@ h1, h2, h3 {
     line-height: 1.45;
     opacity: 0;
 }
-/* Fade cruzado: ao abrir o cartão, o nome some enquanto a explicação aparece */
-.cartao-smart.aberto .frente-smart { opacity: 0; }
-.cartao-smart.aberto .verso-smart { opacity: 1; }
+
+/* Fade em sequência, para os dois textos nunca aparecerem misturados.
+   Sem o mouse: a explicação some rápido e só depois o nome volta */
+.verso-smart { transition: opacity 0.15s ease; }
+.frente-smart { transition: opacity 0.2s ease 0.12s; }
+/* Com o mouse (ou foco pelo teclado): o nome some rápido e só depois a explicação aparece */
+.cartao-smart:hover .frente-smart,
+.cartao-smart:focus-visible .frente-smart { opacity: 0; transition: opacity 0.15s ease; }
+.cartao-smart:hover .verso-smart,
+.cartao-smart:focus-visible .verso-smart { opacity: 1; transition: opacity 0.2s ease 0.12s; }
 .letra-smart { color: var(--vermelho-texto); font-size: 28px; font-weight: 800; line-height: 1; flex-shrink: 0; }
 .nome-smart { font-size: 16px; font-weight: 700; }
 
 .secao-cronograma { background: var(--fundo); }
 .titulo-cronograma { margin-bottom: 28px; }
 
-/* Linha do tempo: quando o cronograma aparece, o script.js coloca "ativa"
-   e a barra se enche sozinha em 2s, acendendo cada fase quando passa por ela */
+/* Linha do tempo: quando o cronograma aparece, o script.js coloca "ativa" e a barra se enche sozinha em 2s.
+   A linha tem as mesmas 4 colunas dos cartões, então cada marco fica em cima da sua fase */
 .linha-tempo {
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0 0 24px;
+}
+.trilho-linha-tempo {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    right: 0;
     height: 4px;
-    margin: 0 0 30px;
     background: var(--borda-forte);
     border-radius: 2px;
 }
@@ -388,28 +439,52 @@ h1, h2, h3 {
     transition: width 2s linear 0.4s;
 }
 .linha-tempo.ativa .progresso-linha-tempo { width: 100%; }
+
+/* Cada marco: a bolinha em cima da linha e o período logo abaixo */
 .marco-linha-tempo {
-    position: absolute;
-    top: 50%;
-    width: 14px;
-    height: 14px;
-    margin: -7px 0 0 -7px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.ponto-marco {
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--fundo);
     border: 2px solid var(--borda-forte);
     transition: background 0.3s ease, border-color 0.3s ease;
 }
-/* Cada marco fica no meio da coluna de uma fase */
-.marco-linha-tempo:nth-of-type(1) { left: 12.5%; }
-.marco-linha-tempo:nth-of-type(2) { left: 37.5%; }
-.marco-linha-tempo:nth-of-type(3) { left: 62.5%; }
-.marco-linha-tempo:nth-of-type(4) { left: 87.5%; }
-.linha-tempo.ativa .marco-linha-tempo { background: var(--vermelho); border-color: var(--vermelho-texto); }
-/* Cada marco acende no momento em que a barra chega nele (0,4s de espera + a parte dos 2s até a posição) */
-.linha-tempo.ativa .marco-linha-tempo:nth-of-type(1) { transition-delay: 0.65s; }
-.linha-tempo.ativa .marco-linha-tempo:nth-of-type(2) { transition-delay: 1.15s; }
-.linha-tempo.ativa .marco-linha-tempo:nth-of-type(3) { transition-delay: 1.65s; }
-.linha-tempo.ativa .marco-linha-tempo:nth-of-type(4) { transition-delay: 2.15s; }
+.data-marco {
+    color: var(--texto);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+.linha-tempo.ativa .ponto-marco { background: var(--vermelho); border-color: var(--vermelho-texto); }
+
+/* Os cartões aparecem junto com a barra. Ao terminar, o script.js coloca "concluida" e os cartões voltam ao normal */
+.js .linha-tempo:not(.concluida) + .grade-fases .cartao-fase {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.js .linha-tempo.ativa:not(.concluida) + .grade-fases .cartao-fase { opacity: 1; transform: none; }
+
+/* Cada marco e o cartão da fase acendem quando a barra chega neles (0,4s de espera + o trecho dos 2s até a coluna).
+   Os marcos começam no 2º filho da linha, porque o 1º é o trilho da barra */
+.linha-tempo.ativa .marco-linha-tempo:nth-child(2) .ponto-marco,
+.js .linha-tempo.ativa:not(.concluida) + .grade-fases .cartao-fase:nth-child(1) { transition-delay: 0.64s; }
+.linha-tempo.ativa .marco-linha-tempo:nth-child(3) .ponto-marco,
+.js .linha-tempo.ativa:not(.concluida) + .grade-fases .cartao-fase:nth-child(2) { transition-delay: 1.15s; }
+.linha-tempo.ativa .marco-linha-tempo:nth-child(4) .ponto-marco,
+.js .linha-tempo.ativa:not(.concluida) + .grade-fases .cartao-fase:nth-child(3) { transition-delay: 1.65s; }
+.linha-tempo.ativa .marco-linha-tempo:nth-child(5) .ponto-marco,
+.js .linha-tempo.ativa:not(.concluida) + .grade-fases .cartao-fase:nth-child(4) { transition-delay: 2.16s; }
+
 .grade-fases {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -417,7 +492,7 @@ h1, h2, h3 {
     position: relative;
 }
 .cartao-fase {
-    min-height: 280px;
+    min-height: 210px;
     padding: 22px 20px 24px;
     background: var(--vermelho);
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -429,9 +504,6 @@ h1, h2, h3 {
     transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 .cartao-fase:hover { border-color: rgba(255, 255, 255, 0.4); background: var(--vermelho-hover); transform: translateY(-5px); }
-.topo-fase { display: flex; align-items: center; gap: 10px; margin-bottom: 42px; }
-.numero-fase { color: #fff; font-family: var(--fonte); font-size: 25px; font-weight: 700; line-height: 1; }
-.periodo-fase { color: rgba(255, 255, 255, 0.7); font-size: 11px; line-height: 1.2; text-transform: uppercase; }
 .cartao-fase h3 { font-size: 20px; margin-bottom: 14px; color: #fff; }
 .cartao-fase p { color: rgba(255, 255, 255, 0.82); font-size: 14px; line-height: 1.5; margin: auto 0 0; }
 .cartao-fase strong { color: #fff; }
@@ -475,8 +547,10 @@ h1, h2, h3 {
 .rodape {
     border-top: 1px solid var(--borda);
     background: var(--fundo);
-    padding: 48px 0 26px;
+    padding: 28px 0 16px;
 }
+/* O rodapé usa a largura toda da tela: a logo fica perto da borda esquerda e o menu perto da direita */
+.rodape .area-central { max-width: none; padding: 0 32px; }
 .colunas-rodape {
     display: flex;
     justify-content: space-between;
@@ -484,17 +558,25 @@ h1, h2, h3 {
     gap: 32px;
     flex-wrap: wrap;
 }
-.marca-rodape { max-width: 380px; }
+/* Marca do rodapé: escudo à esquerda, nome e texto ao lado */
+.marca-rodape {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    max-width: 400px;
+}
+.escudo-rodape { width: 38px; height: auto; flex-shrink: 0; }
 .nome-rodape {
-    font-family: var(--fonte-logo);
+    font-family: var(--fonte-titulo);
     font-weight: 800;
-    font-size: 20px;
+    font-size: 17px;
     letter-spacing: 0;
     color: var(--texto);
 }
-.marca-rodape p { color: var(--texto); font-size: 14px; line-height: 1.6; margin: 8px 0 0; }
-.links-rodape { display: flex; flex-wrap: wrap; gap: 10px 22px; }
-.links-rodape a { color: var(--texto); text-decoration: none; font-size: 14px; transition: color 0.2s ease; }
+.marca-rodape p { color: var(--texto); font-size: 13px; line-height: 1.5; margin: 4px 0 0; }
+/* Menu do rodapé na vertical, em duas colunas: os links descem até 4 e continuam na coluna ao lado */
+.links-rodape { display: grid; grid-auto-flow: column; grid-template-rows: repeat(4, auto); gap: 6px 32px; }
+.links-rodape a { color: var(--texto); text-decoration: none; font-size: 13px; transition: color 0.2s ease; }
 .links-rodape a:hover { color: var(--vermelho-texto); }
 .base-rodape {
     display: flex;
@@ -502,13 +584,11 @@ h1, h2, h3 {
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 32px;
-    padding-top: 20px;
+    margin-top: 18px;
+    padding-top: 12px;
     border-top: 1px solid var(--borda);
 }
-.base-rodape p { color: var(--texto); font-size: 13px; margin: 0; }
-.link-voltar-topo { color: var(--texto); text-decoration: none; font-size: 13px; transition: color 0.2s ease; }
-.link-voltar-topo:hover { color: var(--vermelho-texto); }
+.base-rodape p { color: var(--texto); font-size: 12px; margin: 0; }
 
 /* Botão flutuante de voltar ao topo: o script.js coloca "aparecer" depois que a página é rolada */
 .botao-topo {
@@ -561,7 +641,7 @@ h1, h2, h3 {
 }
 .logo-abertura span {
     color: #fff;
-    font-family: var(--fonte-logo);
+    font-family: var(--fonte-titulo);
     font-size: 34px;
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -624,13 +704,10 @@ h1, h2, h3 {
     .grade-objetivos { grid-template-columns: 1fr; }
     .grade-smart { grid-template-columns: 1fr; }
     .cartao-smart:last-child { grid-column: auto; }
-    .marco-linha-tempo { display: none; }
     .botao-topo { right: 16px; bottom: 16px; }
     .grade-fases { grid-template-columns: 1fr 1fr; }
-    .topo-fase { margin-bottom: 28px; }
     .grade-membros .cartao-pessoa { width: calc((100% - 14px) / 2); min-height: 0; }
-    .tela-cheia { min-height: 0; }
-    .inicio { min-height: 72vh; padding: 40px 24px; }
+    .inicio { padding: 40px 24px; }
     .escudo-inicio { width: 90px; margin-bottom: 22px; }
     .secao { padding: 72px 0; }
     .grade-app { grid-template-columns: 1fr; gap: 40px; justify-items: center; align-items: center; }
@@ -655,6 +732,7 @@ h1, h2, h3 {
     .frente-smart,
     .verso-smart,
     .progresso-linha-tempo,
-    .marco-linha-tempo { transition: none !important; }
+    .ponto-marco { transition: none !important; }
+    .js .linha-tempo:not(.concluida) + .grade-fases .cartao-fase { opacity: 1; transform: none; }
     .js .tela-abertura { display: none; }
 }

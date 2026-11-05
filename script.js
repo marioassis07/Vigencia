@@ -1,9 +1,9 @@
 // Animação de entrada das seções quando elas aparecem na tela
 const secoes = document.querySelectorAll('main section');
 
-// Elementos que recebem a animação padrão (o aplicativo e o painel têm animação própria no CSS)
+// Elementos que recebem a animação padrão (o aplicativo, o painel e as fases do cronograma têm animação própria)
 const elementosPadrao = '.inicio > *, .titulo-secao, .cartao-estatistica, .texto-solucao p, .texto-painel > p, ' +
-    '.cartao-meta, .cartao-smart, .cartao-fase, .cartao-pessoa';
+    '.cartao-meta, .cartao-smart, .cartao-pessoa';
 
 // Quem desativou animações no sistema vê tudo direto, sem movimento
 const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -65,14 +65,6 @@ function quandoAberturaTerminar(acao) {
     setTimeout(terminar, 2400);
 }
 
-// Cartões S.M.A.R.T.: cada clique troca o nome pela explicação, e vice-versa
-document.querySelectorAll('.cartao-smart').forEach((cartao) => {
-    cartao.addEventListener('click', () => {
-        const aberto = cartao.classList.toggle('aberto');
-        cartao.setAttribute('aria-pressed', aberto);
-    });
-});
-
 // Elementos que mudam conforme a página é rolada
 const cabecalho = document.querySelector('.cabecalho');
 const botaoTopo = document.querySelector('.botao-topo');
@@ -95,19 +87,27 @@ window.addEventListener('scroll', atualizarAoRolar, { passive: true });
 window.addEventListener('resize', atualizarAoRolar);
 atualizarAoRolar();
 
-// Linha do tempo do cronograma: quando aparece na tela, a barra se enche sozinha (a animação fica no CSS)
+// Linha do tempo do cronograma: quando aparece na tela, a barra se enche sozinha
+// e os cartões das fases aparecem junto com ela (a animação fica no CSS)
 const linhaTempo = document.querySelector('.linha-tempo');
+
+function iniciarLinhaTempo() {
+    linhaTempo.classList.add('ativa');
+
+    // Quando a animação termina (0,4s + 2s + o fade do último cartão), os cartões voltam ao estilo normal
+    setTimeout(() => linhaTempo.classList.add('concluida'), 3000);
+}
 
 if ('IntersectionObserver' in window) {
     const observadorLinha = new IntersectionObserver((entradas) => {
         if (!entradas[0].isIntersecting) return;
-        linhaTempo.classList.add('ativa');
+        iniciarLinhaTempo();
         observadorLinha.disconnect(); // acontece uma vez só
     }, { threshold: 1, rootMargin: '0px 0px -25% 0px' }); // só começa quando a linha passa do último quarto da tela
 
     observadorLinha.observe(linhaTempo);
 } else {
-    linhaTempo.classList.add('ativa');
+    linhaTempo.classList.add('ativa', 'concluida');
 }
 
 // Celular que inclina seguindo o mouse, só em telas com mouse e sem animações desativadas

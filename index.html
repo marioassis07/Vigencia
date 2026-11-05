@@ -10,7 +10,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- Avisa o CSS logo no início que o JavaScript está ativo (a tela de abertura só aparece nesse caso) -->
   <script>document.documentElement.classList.add('js');</script>
@@ -69,6 +69,12 @@
         </div>
         <div class="grade-estatisticas">
           <div class="cartao-estatistica">
+            <!-- Ícone de cédula -->
+            <svg class="icone-estatistica" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="6" width="20" height="12" rx="2"/>
+              <circle cx="12" cy="12" r="2.6"/>
+              <path d="M6 10v4M18 10v4"/>
+            </svg>
             <div class="numero-estatistica">R$ 1 BI</div>
             <p>Prejuízo anual estimado no Brasil com falsas ligações para serviços de emergência. Cada trote gasta
               combustível, equipamento e horas de equipes que poderiam estar em atendimentos reais, e quem paga essa
@@ -76,12 +82,25 @@
           </div>
 
           <div class="cartao-estatistica">
+            <!-- Ícone de telefone -->
+            <svg class="icone-estatistica" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 3h3.5l1.8 4.5-2.3 1.4a12 12 0 0 0 7.1 7.1l1.4-2.3L21 15.5V19a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/>
+            </svg>
             <div class="numero-estatistica">1 a cada 2</div>
             <p>Ligações para serviços de emergência em épocas de alta são trotes. Enquanto a central atende uma
               chamada falsa, a linha fica ocupada e quem está numa emergência de verdade espera mais pelo socorro.</p>
           </div>
 
           <div class="cartao-estatistica">
+            <!-- Ícone de ambulância -->
+            <svg class="icone-estatistica" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 17V7h11v10"/>
+              <path d="M13 10h4.5L21 14v3h-2"/>
+              <path d="M5 17h-3M15 17H9"/>
+              <circle cx="7" cy="17.5" r="2"/>
+              <circle cx="17" cy="17.5" r="2"/>
+              <path d="M7.5 9.5v4M5.5 11.5h4"/>
+            </svg>
             <div class="numero-estatistica">15.810</div>
             <p>Trotes registrados pelo SAMU-DF em apenas um ano. Cada ambulância enviada para uma chamada falsa fica
               indisponível na cidade, e um atendimento real pode chegar mais tarde do que deveria.</p>
@@ -151,7 +170,7 @@
       </div>
     </section>
 
-    <section class="secao" id="painel">
+    <section class="secao tela-cheia" id="painel">
       <div class="area-central">
         <div class="grade-painel">
           <div class="texto-painel">
@@ -173,7 +192,7 @@
           </div>
 
           <div class="caixa-imagem-painel">
-            <img src="painel-tatico.webp" width="761" height="687" alt="Painel tático da central de emergências do Vigência">
+            <img src="painel-tatico.jpg" width="1522" height="1374" alt="Painel tático da central de emergências do Vigência">
           </div>
         </div>
       </div>
@@ -183,7 +202,7 @@
       <div class="area-central">
         <div class="titulo-secao titulo-objetivos">
           <h2>Objetivos de performance <span>(S.M.A.R.T.)</span></h2>
-          <p>A meta principal do projeto, detalhada pelo método S.M.A.R.T. Clique em cada cartão para ver o detalhe.</p>
+          <p>A meta principal do projeto, detalhada pelo método S.M.A.R.T. Passe o mouse sobre cada cartão para ver o detalhe.</p>
         </div>
 
         <div class="grade-objetivos">
@@ -193,36 +212,36 @@
           </div>
 
           <div class="grade-smart">
-            <button type="button" class="cartao-smart" aria-pressed="false">
+            <div class="cartao-smart" tabindex="0">
               <span class="camadas-smart">
                 <span class="frente-smart"><span class="letra-smart">S</span><span class="nome-smart">Específico</span></span>
                 <span class="verso-smart">Desenvolver um app inteligente de emergência com autenticação.</span>
               </span>
-            </button>
-            <button type="button" class="cartao-smart" aria-pressed="false">
+            </div>
+            <div class="cartao-smart" tabindex="0">
               <span class="camadas-smart">
                 <span class="frente-smart"><span class="letra-smart">M</span><span class="nome-smart">Mensurável</span></span>
                 <span class="verso-smart">Reduzir em 20% os acionamentos falsos (trotes).</span>
               </span>
-            </button>
-            <button type="button" class="cartao-smart" aria-pressed="false">
+            </div>
+            <div class="cartao-smart" tabindex="0">
               <span class="camadas-smart">
                 <span class="frente-smart"><span class="letra-smart">A</span><span class="nome-smart">Alcançável</span></span>
                 <span class="verso-smart">Viável através do cruzamento de GPS, mídia e score de reputação.</span>
               </span>
-            </button>
-            <button type="button" class="cartao-smart" aria-pressed="false">
+            </div>
+            <div class="cartao-smart" tabindex="0">
               <span class="camadas-smart">
                 <span class="frente-smart"><span class="letra-smart">R</span><span class="nome-smart">Relevante</span></span>
                 <span class="verso-smart">Salvar vidas, otimizar recursos e proteger as equipes de rua.</span>
               </span>
-            </button>
-            <button type="button" class="cartao-smart" aria-pressed="false">
+            </div>
+            <div class="cartao-smart" tabindex="0">
               <span class="camadas-smart">
                 <span class="frente-smart"><span class="letra-smart">T</span><span class="nome-smart">Temporal</span></span>
                 <span class="verso-smart">Implantação e análise de resultados em 36 meses (3 anos).</span>
               </span>
-            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -235,32 +254,29 @@
           <p>Quatro fases para validar, integrar e levar o Vigência a todo o território brasileiro.</p>
         </div>
 
-        <div class="linha-tempo" aria-hidden="true">
-          <div class="progresso-linha-tempo"></div>
-          <span class="marco-linha-tempo"></span>
-          <span class="marco-linha-tempo"></span>
-          <span class="marco-linha-tempo"></span>
-          <span class="marco-linha-tempo"></span>
+        <!-- Linha do tempo: a barra passa pelos marcos e, abaixo de cada um, fica o período da fase -->
+        <div class="linha-tempo">
+          <div class="trilho-linha-tempo" aria-hidden="true"><div class="progresso-linha-tempo"></div></div>
+          <div class="marco-linha-tempo"><span class="ponto-marco" aria-hidden="true"></span><span class="data-marco">0 a 18 meses</span></div>
+          <div class="marco-linha-tempo"><span class="ponto-marco" aria-hidden="true"></span><span class="data-marco">18 a 24 meses</span></div>
+          <div class="marco-linha-tempo"><span class="ponto-marco" aria-hidden="true"></span><span class="data-marco">24 a 30 meses</span></div>
+          <div class="marco-linha-tempo"><span class="ponto-marco" aria-hidden="true"></span><span class="data-marco">30 a 36 meses</span></div>
         </div>
 
         <div class="grade-fases">
           <div class="cartao-fase">
-            <div class="topo-fase"><span class="numero-fase">01</span><span class="periodo-fase">0 a 18 meses</span></div>
             <h3>Desenvolvimento e MVP</h3>
             <p><strong>Foco:</strong> Programação, infraestrutura e testes fechados de segurança.</p>
           </div>
           <div class="cartao-fase">
-            <div class="topo-fase"><span class="numero-fase">02</span><span class="periodo-fase">18 a 24 meses</span></div>
             <h3>Piloto em órgãos parceiros</h3>
             <p><strong>Foco:</strong> Integração com PM, Bombeiros e SAMU locais e testes no painel.</p>
           </div>
           <div class="cartao-fase">
-            <div class="topo-fase"><span class="numero-fase">03</span><span class="periodo-fase">24 a 30 meses</span></div>
             <h3>Regionalização</h3>
             <p><strong>Foco:</strong> Expansão estadual e análise de métricas de redução de trotes.</p>
           </div>
           <div class="cartao-fase">
-            <div class="topo-fase"><span class="numero-fase">04</span><span class="periodo-fase">30 a 36 meses</span></div>
             <h3>Expansão nacional</h3>
             <p><strong>Foco:</strong> Escalabilidade em nuvem para operação em todo o território brasileiro.</p>
           </div>
@@ -320,8 +336,11 @@
   <footer class="rodape">
     <div class="area-central colunas-rodape">
       <div class="marca-rodape">
-        <span class="nome-rodape">Vigência</span>
-        <p>Segurança na palma da mão. Triagem inteligente que barra trotes e acelera o socorro a quem realmente precisa.</p>
+        <img class="escudo-rodape" src="simbolo-vigencia.png" width="240" height="250" alt="">
+        <div>
+          <span class="nome-rodape">Vigência</span>
+          <p>Segurança na palma da mão. Triagem inteligente que barra trotes e acelera o socorro a quem realmente precisa.</p>
+        </div>
       </div>
       <nav class="links-rodape" aria-label="Navegação do rodapé">
         <a href="#estatisticas">Estatísticas</a>
@@ -335,7 +354,6 @@
     </div>
     <div class="area-central base-rodape">
       <p>© 2026 Vigência · Projeto acadêmico</p>
-      <a href="#home" class="link-voltar-topo">Voltar ao topo ↑</a>
     </div>
   </footer>
 

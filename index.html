@@ -10,13 +10,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- Avisa o CSS logo no início que o JavaScript está ativo (a tela de abertura só aparece nesse caso) -->
+  <script>document.documentElement.classList.add('js');</script>
   <script src="script.js" defer></script>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 </head>
 <body>
+  <!-- Tela de abertura: fundo vermelho com a logo, que some sozinha depois de alguns instantes -->
+  <div class="tela-abertura" aria-hidden="true">
+    <div class="logo-abertura">
+      <img src="simbolo-vigencia.png" width="240" height="250" alt="">
+      <span>VIGÊNCIA</span>
+    </div>
+  </div>
+
   <header class="cabecalho">
     <nav class="menu-topo">
       <a href="#home" class="logo">
@@ -34,6 +44,7 @@
         <li><a href="#equipe">Equipe</a></li>
       </ul>
     </nav>
+    <div class="barra-progresso" aria-hidden="true"></div>
   </header>
 
   <main>
@@ -172,7 +183,7 @@
       <div class="area-central">
         <div class="titulo-secao titulo-objetivos">
           <h2>Objetivos de performance <span>(S.M.A.R.T.)</span></h2>
-          <p>A meta principal do projeto, detalhada pelo método S.M.A.R.T.</p>
+          <p>A meta principal do projeto, detalhada pelo método S.M.A.R.T. Clique em cada cartão para ver o detalhe.</p>
         </div>
 
         <div class="grade-objetivos">
@@ -182,21 +193,36 @@
           </div>
 
           <div class="grade-smart">
-            <div class="cartao-smart">
-              <div><h3>Específico</h3><p>Desenvolver um app inteligente de emergência com autenticação.</p></div>
-            </div>
-            <div class="cartao-smart">
-              <div><h3>Mensurável</h3><p>Reduzir em 20% os acionamentos falsos (trotes).</p></div>
-            </div>
-            <div class="cartao-smart">
-              <div><h3>Alcançável</h3><p>Viável através do cruzamento de GPS, mídia e score de reputação.</p></div>
-            </div>
-            <div class="cartao-smart">
-              <div><h3>Relevante</h3><p>Salvar vidas, otimizar recursos e proteger as equipes de rua.</p></div>
-            </div>
-            <div class="cartao-smart">
-              <div><h3>Temporal</h3><p>Implantação e análise de resultados em 36 meses (3 anos).</p></div>
-            </div>
+            <button type="button" class="cartao-smart" aria-pressed="false">
+              <span class="camadas-smart">
+                <span class="frente-smart"><span class="letra-smart">S</span><span class="nome-smart">Específico</span></span>
+                <span class="verso-smart">Desenvolver um app inteligente de emergência com autenticação.</span>
+              </span>
+            </button>
+            <button type="button" class="cartao-smart" aria-pressed="false">
+              <span class="camadas-smart">
+                <span class="frente-smart"><span class="letra-smart">M</span><span class="nome-smart">Mensurável</span></span>
+                <span class="verso-smart">Reduzir em 20% os acionamentos falsos (trotes).</span>
+              </span>
+            </button>
+            <button type="button" class="cartao-smart" aria-pressed="false">
+              <span class="camadas-smart">
+                <span class="frente-smart"><span class="letra-smart">A</span><span class="nome-smart">Alcançável</span></span>
+                <span class="verso-smart">Viável através do cruzamento de GPS, mídia e score de reputação.</span>
+              </span>
+            </button>
+            <button type="button" class="cartao-smart" aria-pressed="false">
+              <span class="camadas-smart">
+                <span class="frente-smart"><span class="letra-smart">R</span><span class="nome-smart">Relevante</span></span>
+                <span class="verso-smart">Salvar vidas, otimizar recursos e proteger as equipes de rua.</span>
+              </span>
+            </button>
+            <button type="button" class="cartao-smart" aria-pressed="false">
+              <span class="camadas-smart">
+                <span class="frente-smart"><span class="letra-smart">T</span><span class="nome-smart">Temporal</span></span>
+                <span class="verso-smart">Implantação e análise de resultados em 36 meses (3 anos).</span>
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -207,6 +233,14 @@
         <div class="titulo-secao titulo-cronograma">
           <h2>Cronograma de expansão</h2>
           <p>Quatro fases para validar, integrar e levar o Vigência a todo o território brasileiro.</p>
+        </div>
+
+        <div class="linha-tempo" aria-hidden="true">
+          <div class="progresso-linha-tempo"></div>
+          <span class="marco-linha-tempo"></span>
+          <span class="marco-linha-tempo"></span>
+          <span class="marco-linha-tempo"></span>
+          <span class="marco-linha-tempo"></span>
         </div>
 
         <div class="grade-fases">
@@ -304,5 +338,8 @@
       <a href="#home" class="link-voltar-topo">Voltar ao topo ↑</a>
     </div>
   </footer>
+
+  <!-- Botão flutuante que aparece depois de rolar a página -->
+  <a href="#home" class="botao-topo" aria-label="Voltar ao topo">↑</a>
 </body>
 </html>

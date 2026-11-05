@@ -7,16 +7,16 @@
 
     --texto:           #ffffff;
 
-    --vermelho:        #e13a3a;
-    --vermelho-claro:  #ff5a54;
-    --vermelho-cartao: #962424;
-    --vermelho-cartao-hover: #ad3030;
+    --vermelho:        #8d0e0e; /* cor do escudo: usada nos fundos, botões, cartões e barras */
+    --vermelho-hover:  #a81616; /* um pouco mais claro, para o hover dos fundos vermelhos */
+    --vermelho-texto:  #eb3b3b; /* mesmo vermelho, mais claro, para textos ficarem legíveis no fundo escuro */
 
     --largura-max:      1120px;
     --arredondamento:   14px;
-    --altura-cabecalho: 55px;
+    --altura-cabecalho: 45px; /* altura do cabeçalho compacto, que aparece ao rolar a página */
 
     --fonte: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    --fonte-logo: 'Montserrat', 'Inter', Arial, sans-serif; /* mesma fonte da logo no pitch */
 }
 
 * { box-sizing: border-box; }
@@ -65,7 +65,7 @@ h1, h2, h3 {
 }
 
 .botao-vermelho { background: var(--vermelho); color: #fff; }
-.botao-vermelho:hover { background: var(--vermelho-claro); }
+.botao-vermelho:hover { background: var(--vermelho-hover); }
 
 .cabecalho {
     position: sticky;
@@ -75,6 +75,18 @@ h1, h2, h3 {
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--borda);
 }
+
+/* Barra de progresso: o script.js estica a barra conforme a página é rolada */
+.barra-progresso {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 3px;
+    background: var(--vermelho);
+    transform: scaleX(0);
+    transform-origin: left;
+}
 .menu-topo {
     display: flex;
     align-items: center;
@@ -83,17 +95,25 @@ h1, h2, h3 {
     max-width: var(--largura-max);
     margin: 0 auto;
     padding: 14px 24px;
+    transition: padding 0.25s ease;
 }
+
+/* Cabeçalho compacto: o script.js coloca "rolado" quando a pessoa sai do início */
+.cabecalho { transition: box-shadow 0.25s ease, background 0.25s ease; }
+.cabecalho.rolado {
+    background: rgba(7, 9, 20, 0.92);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+.cabecalho.rolado .menu-topo { padding-top: 9px; padding-bottom: 9px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
 .escudo-logo { height: 23px; width: auto; position: relative; top: 1px; }
 .nome-logo {
     color: var(--texto);
+    font-family: var(--fonte-logo);
     font-size: 23px;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02em;
     line-height: 1;
-    position: relative;
-    top: -1px;
 }
 
 .links-menu {
@@ -110,7 +130,7 @@ h1, h2, h3 {
     font-weight: 500;
     transition: color 0.2s ease;
 }
-.links-menu a:hover { color: var(--vermelho-claro); }
+.links-menu a:hover { color: var(--vermelho-texto); }
 
 .inicio {
     text-align: center;
@@ -162,7 +182,7 @@ h1, h2, h3 {
     max-width: none;
     margin: 0;
 }
-.titulo-solucao h2 { color: var(--vermelho-claro); }
+.titulo-solucao h2 { color: var(--vermelho-texto); }
 .texto-solucao {
     max-width: 720px;
     text-align: left;
@@ -182,7 +202,12 @@ h1, h2, h3 {
     align-items: center;
 }
 .caixa-imagem-app { order: 2; display: flex; align-items: center; justify-content: center; }
-.imagem-app { height: 360px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 26px 55px rgba(0, 0, 0, 0.6)); }
+.imagem-app { height: 360px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 26px 55px rgba(0, 0, 0, 0.6)); transition: transform 0.4s ease; }
+/* Inclinação do celular seguindo o mouse: o script.js define o ângulo em --giro-x e --giro-y */
+.caixa-imagem-app.inclinando .imagem-app {
+    transform: perspective(800px) rotateX(var(--giro-x)) rotateY(var(--giro-y));
+    transition: transform 0.1s ease-out;
+}
 .grade-funcoes {
     order: 1;
     display: grid;
@@ -191,14 +216,14 @@ h1, h2, h3 {
     align-content: center;
 }
 .cartao-funcao {
-    background: var(--vermelho-cartao);
+    background: var(--vermelho);
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 10px;
     padding: 18px 20px;
     transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
 }
 .cartao-funcao:last-child { grid-column: 1 / -1; }
-.cartao-funcao:hover { border-color: rgba(255, 255, 255, 0.4); background: var(--vermelho-cartao-hover); transform: translateY(-3px); }
+.cartao-funcao:hover { border-color: rgba(255, 255, 255, 0.4); background: var(--vermelho-hover); transform: translateY(-3px); }
 .cartao-funcao h3 { font-size: 16px; margin-bottom: 6px; color: #fff; }
 .cartao-funcao p { color: rgba(255, 255, 255, 0.82); font-size: 13px; line-height: 1.5; margin: 0; }
 
@@ -215,7 +240,7 @@ h1, h2, h3 {
     max-width: none;
     margin: 0 0 20px;
 }
-.titulo-painel h2 { color: var(--vermelho-claro); }
+.titulo-painel h2 { color: var(--vermelho-texto); }
 .texto-painel > p {
     color: var(--texto);
     font-size: 17px;
@@ -280,7 +305,7 @@ h1, h2, h3 {
     font-family: var(--fonte);
     font-size: 36px;
     font-weight: 700;
-    color: var(--vermelho-claro);
+    color: var(--vermelho-texto);
     line-height: 1;
     margin-bottom: 14px;
 }
@@ -288,7 +313,7 @@ h1, h2, h3 {
 
 .secao-objetivos { background: var(--fundo-alternado); }
 .titulo-objetivos { margin-bottom: 28px; }
-.titulo-objetivos h2 span { color: var(--vermelho-claro); }
+.titulo-objetivos h2 span { color: var(--vermelho-texto); }
 .grade-objetivos {
     display: grid;
     grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
@@ -305,7 +330,7 @@ h1, h2, h3 {
     justify-content: flex-start;
     text-align: center;
 }
-.etiqueta-meta { color: var(--vermelho-claro); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 10px; }
+.etiqueta-meta { color: var(--vermelho-texto); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 10px; }
 .cartao-meta h3 { font-size: clamp(22px, 2.5vw, 30px); }
 .grade-smart { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .cartao-smart {
@@ -313,15 +338,78 @@ h1, h2, h3 {
     border: 1px solid var(--borda);
     border-radius: 10px;
     padding: 18px;
+    color: var(--texto);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
     transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .cartao-smart:last-child { grid-column: 1 / -1; }
 .cartao-smart:hover { border-color: var(--borda-forte); transform: translateY(-3px); }
-.cartao-smart h3 { font-size: 16px; margin: 1px 0 5px; }
-.cartao-smart p { color: var(--texto); font-size: 13px; line-height: 1.45; margin: 0; }
+
+/* A frente (letra e nome) e o verso (explicação) ficam empilhados no mesmo lugar */
+.camadas-smart { display: grid; }
+.frente-smart,
+.verso-smart {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.4s ease;
+}
+.frente-smart { gap: 12px; }
+.verso-smart {
+    font-size: 13px;
+    line-height: 1.45;
+    opacity: 0;
+}
+/* Fade cruzado: ao abrir o cartão, o nome some enquanto a explicação aparece */
+.cartao-smart.aberto .frente-smart { opacity: 0; }
+.cartao-smart.aberto .verso-smart { opacity: 1; }
+.letra-smart { color: var(--vermelho-texto); font-size: 28px; font-weight: 800; line-height: 1; flex-shrink: 0; }
+.nome-smart { font-size: 16px; font-weight: 700; }
 
 .secao-cronograma { background: var(--fundo); }
 .titulo-cronograma { margin-bottom: 28px; }
+
+/* Linha do tempo: quando o cronograma aparece, o script.js coloca "ativa"
+   e a barra se enche sozinha em 2s, acendendo cada fase quando passa por ela */
+.linha-tempo {
+    position: relative;
+    height: 4px;
+    margin: 0 0 30px;
+    background: var(--borda-forte);
+    border-radius: 2px;
+}
+.progresso-linha-tempo {
+    height: 100%;
+    width: 0;
+    background: var(--vermelho);
+    border-radius: 2px;
+    transition: width 2s linear 0.4s;
+}
+.linha-tempo.ativa .progresso-linha-tempo { width: 100%; }
+.marco-linha-tempo {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    background: var(--fundo);
+    border: 2px solid var(--borda-forte);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+/* Cada marco fica no meio da coluna de uma fase */
+.marco-linha-tempo:nth-of-type(1) { left: 12.5%; }
+.marco-linha-tempo:nth-of-type(2) { left: 37.5%; }
+.marco-linha-tempo:nth-of-type(3) { left: 62.5%; }
+.marco-linha-tempo:nth-of-type(4) { left: 87.5%; }
+.linha-tempo.ativa .marco-linha-tempo { background: var(--vermelho); border-color: var(--vermelho-texto); }
+/* Cada marco acende no momento em que a barra chega nele (0,4s de espera + a parte dos 2s até a posição) */
+.linha-tempo.ativa .marco-linha-tempo:nth-of-type(1) { transition-delay: 0.65s; }
+.linha-tempo.ativa .marco-linha-tempo:nth-of-type(2) { transition-delay: 1.15s; }
+.linha-tempo.ativa .marco-linha-tempo:nth-of-type(3) { transition-delay: 1.65s; }
+.linha-tempo.ativa .marco-linha-tempo:nth-of-type(4) { transition-delay: 2.15s; }
 .grade-fases {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -331,7 +419,7 @@ h1, h2, h3 {
 .cartao-fase {
     min-height: 280px;
     padding: 22px 20px 24px;
-    background: var(--vermelho-cartao);
+    background: var(--vermelho);
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 12px;
     position: relative;
@@ -340,7 +428,7 @@ h1, h2, h3 {
     flex-direction: column;
     transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
-.cartao-fase:hover { border-color: rgba(255, 255, 255, 0.4); background: var(--vermelho-cartao-hover); transform: translateY(-5px); }
+.cartao-fase:hover { border-color: rgba(255, 255, 255, 0.4); background: var(--vermelho-hover); transform: translateY(-5px); }
 .topo-fase { display: flex; align-items: center; gap: 10px; margin-bottom: 42px; }
 .numero-fase { color: #fff; font-family: var(--fonte); font-size: 25px; font-weight: 700; line-height: 1; }
 .periodo-fase { color: rgba(255, 255, 255, 0.7); font-size: 11px; line-height: 1.2; text-transform: uppercase; }
@@ -366,7 +454,7 @@ h1, h2, h3 {
     transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .cartao-pessoa:hover { border-color: var(--borda-forte); transform: translateY(-4px); }
-.cargo-pessoa { color: var(--vermelho-claro); display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.25; text-transform: uppercase; }
+.cargo-pessoa { color: var(--vermelho-texto); display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.25; text-transform: uppercase; }
 .cartao-pessoa h3 { font-size: 17px; margin-top: 5px; }
 .cartao-orientador { max-width: 430px; margin: 0 auto; justify-content: center; }
 .cartao-orientador h3 { font-size: 22px; }
@@ -398,16 +486,16 @@ h1, h2, h3 {
 }
 .marca-rodape { max-width: 380px; }
 .nome-rodape {
-    font-family: var(--fonte);
+    font-family: var(--fonte-logo);
     font-weight: 800;
     font-size: 20px;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     color: var(--texto);
 }
 .marca-rodape p { color: var(--texto); font-size: 14px; line-height: 1.6; margin: 8px 0 0; }
 .links-rodape { display: flex; flex-wrap: wrap; gap: 10px 22px; }
 .links-rodape a { color: var(--texto); text-decoration: none; font-size: 14px; transition: color 0.2s ease; }
-.links-rodape a:hover { color: var(--vermelho-claro); }
+.links-rodape a:hover { color: var(--vermelho-texto); }
 .base-rodape {
     display: flex;
     justify-content: space-between;
@@ -420,7 +508,74 @@ h1, h2, h3 {
 }
 .base-rodape p { color: var(--texto); font-size: 13px; margin: 0; }
 .link-voltar-topo { color: var(--texto); text-decoration: none; font-size: 13px; transition: color 0.2s ease; }
-.link-voltar-topo:hover { color: var(--vermelho-claro); }
+.link-voltar-topo:hover { color: var(--vermelho-texto); }
+
+/* Botão flutuante de voltar ao topo: o script.js coloca "aparecer" depois que a página é rolada */
+.botao-topo {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 40;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--vermelho);
+    color: #fff;
+    font-size: 22px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+}
+.botao-topo.aparecer { opacity: 1; transform: none; pointer-events: auto; }
+.botao-topo:hover { background: var(--vermelho-hover); }
+
+/* Tela de abertura: só aparece quando o JavaScript está ativo (classe "js" no <html>).
+   Ela some sozinha pelo CSS, então nunca fica travada na frente da página */
+.tela-abertura { display: none; }
+.js .tela-abertura {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--vermelho);
+    animation: sumirAbertura 0.6s ease 1.6s forwards;
+}
+.logo-abertura {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    animation: aparecerLogo 0.7s ease both;
+}
+.logo-abertura img {
+    width: 120px;
+    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.35));
+}
+.logo-abertura span {
+    color: #fff;
+    font-family: var(--fonte-logo);
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+/* A logo aparece crescendo de leve */
+@keyframes aparecerLogo {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+}
+/* Depois, a tela vermelha some e deixa a página à mostra */
+@keyframes sumirAbertura {
+    to { opacity: 0; visibility: hidden; }
+}
 
 /* Animações ao rolar: o script.js coloca "animar" na seção e depois "visivel" */
 
@@ -469,6 +624,8 @@ h1, h2, h3 {
     .grade-objetivos { grid-template-columns: 1fr; }
     .grade-smart { grid-template-columns: 1fr; }
     .cartao-smart:last-child { grid-column: auto; }
+    .marco-linha-tempo { display: none; }
+    .botao-topo { right: 16px; bottom: 16px; }
     .grade-fases { grid-template-columns: 1fr 1fr; }
     .topo-fase { margin-bottom: 28px; }
     .grade-membros .cartao-pessoa { width: calc((100% - 14px) / 2); min-height: 0; }
@@ -491,4 +648,13 @@ h1, h2, h3 {
     .grade-lideranca { grid-template-columns: 1fr; }
     .cartao-pessoa, .grade-membros .cartao-pessoa { flex-direction: row; text-align: left; justify-content: flex-start; min-height: 0; }
     .grade-membros .cartao-pessoa { width: 100%; }
+}
+
+/* Quem desativou animações no sistema entra direto na página e vê o cartão trocar de texto e a linha do tempo cheia, sem movimento */
+@media (prefers-reduced-motion: reduce) {
+    .frente-smart,
+    .verso-smart,
+    .progresso-linha-tempo,
+    .marco-linha-tempo { transition: none !important; }
+    .js .tela-abertura { display: none; }
 }

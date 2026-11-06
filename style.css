@@ -693,14 +693,3 @@ h1, h2, h3 {
     .grade-membros .cartao-pessoa { width: 100%; }
     .descricao-inicio br { display: none; } /* no celular o texto quebra sozinho, sem a quebra fixa */
 }
-
-/* Quem desativou animações no sistema entra direto na página e vê o cartão trocar de texto e a linha do tempo cheia, sem movimento */
-@media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; } /* os links do menu pulam direto para a seção, sem deslizar */
-    .frente-smart,
-    .verso-smart,
-    .progresso-linha-tempo,
-    .ponto-marco { transition: none !important; }
-    .js .linha-tempo:not(.concluida) + .grade-fases .cartao-fase { opacity: 1; transform: none; }
-    .js .tela-abertura { display: none; }
-}

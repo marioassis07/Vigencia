@@ -5,10 +5,7 @@ const secoes = document.querySelectorAll('main section');
 const elementosPadrao = '.inicio > *, .titulo-secao, .cartao-estatistica, .texto-solucao p, .texto-painel > p, ' +
     '.cartao-meta, .cartao-smart, .cartao-pessoa';
 
-// Quem desativou animações no sistema vê tudo direto, sem movimento
-const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (!reduzirMovimento && 'IntersectionObserver' in window) {
+if ('IntersectionObserver' in window) {
     secoes.forEach((secao) => {
         // Só esconde os elementos quando o JavaScript está funcionando
         secao.classList.add('animar');
@@ -43,8 +40,8 @@ if (!reduzirMovimento && 'IntersectionObserver' in window) {
 function quandoAberturaTerminar(acao) {
     const telaAbertura = document.querySelector('.tela-abertura');
 
-    // Sem tela de abertura visível (por exemplo, com animações desativadas), executa na hora
-    if (!telaAbertura || getComputedStyle(telaAbertura).display === 'none') {
+    // Sem tela de abertura na página, executa na hora
+    if (!telaAbertura) {
         acao();
         return;
     }

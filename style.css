@@ -10,7 +10,7 @@
     --vermelho:        #8d0e0e; /* cor do escudo: usada nos fundos, botões, cartões e barras */
     --vermelho-hover:  #a81616; /* um pouco mais claro, para o hover dos fundos vermelhos */
     --vermelho-texto:  #eb3b3b; /* mesmo vermelho, mais claro, para textos ficarem legíveis no fundo escuro */
-
+    --vermelho-titulo: #ff5c5c; /* vermelho ainda mais claro, só para os títulos em vermelho */
     --largura-max:      1120px;
     --arredondamento:   14px;
     --altura-cabecalho: 55px; /* altura do cabeçalho fixo no topo */
@@ -182,7 +182,7 @@ h1, h2, h3 {
     max-width: none;
     margin: 0;
 }
-.titulo-solucao h2 { color: var(--vermelho-texto); }
+.titulo-solucao h2 { color: var(--vermelho-titulo); }
 .texto-solucao {
     max-width: 720px;
     text-align: left;
@@ -234,7 +234,7 @@ h1, h2, h3 {
     max-width: none;
     margin: 0 0 20px;
 }
-.titulo-painel h2 { color: var(--vermelho-texto); }
+.titulo-painel h2 { color: var(--vermelho-titulo); }
 .texto-painel > p {
     font-size: 17px;
     margin: 0 0 22px;
@@ -338,7 +338,7 @@ h1, h2, h3 {
 
 .secao-objetivos { background: var(--fundo-alternado); }
 .titulo-objetivos { margin-bottom: 28px; }
-.titulo-objetivos h2 span { color: var(--vermelho-texto); }
+.titulo-objetivos h2 span { color: var(--vermelho-titulo); }
 .grade-objetivos {
     display: grid;
     grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);

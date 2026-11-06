@@ -13,8 +13,7 @@
 
     --largura-max:      1120px;
     --arredondamento:   14px;
-    --altura-cabecalho: 45px; /* altura do cabeçalho compacto, que aparece ao rolar a página */
-    --altura-cabecalho-topo: 55px; /* altura do cabeçalho no topo da página, antes de rolar */
+    --altura-cabecalho: 55px; /* altura do cabeçalho fixo no topo */
 
     --fonte: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
     --fonte-titulo: 'Montserrat', 'Inter', Arial, sans-serif; /* fonte da logo no pitch: usada nos títulos e no nome da logo */
@@ -75,6 +74,7 @@ h1, h2, h3 {
     background: rgba(7, 9, 20, 0.72);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--borda);
+    transition: box-shadow 0.25s ease, background 0.25s ease;
 }
 
 /* Barra de progresso: o script.js estica a barra conforme a página é rolada */
@@ -96,17 +96,15 @@ h1, h2, h3 {
     align-items: center;
     gap: 24px;
     padding: 14px 32px;
-    transition: padding 0.25s ease;
 }
 .menu-topo .logo { justify-self: start; }
 
-/* Cabeçalho compacto: o script.js coloca "rolado" quando a pessoa sai do início */
-.cabecalho { transition: box-shadow 0.25s ease, background 0.25s ease; }
+/* Quando a pessoa sai do início, o script.js coloca "rolado" e o cabeçalho ganha sombra e fundo mais escuro.
+   O tamanho não muda, para o conteúdo não dar um pulo */
 .cabecalho.rolado {
     background: rgba(7, 9, 20, 0.92);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
-.cabecalho.rolado .menu-topo { padding-top: 9px; padding-bottom: 9px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
 .escudo-logo { height: 23px; width: auto; position: relative; top: 1px; }
 .nome-logo {
@@ -130,25 +128,25 @@ h1, h2, h3 {
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
+    white-space: nowrap; /* "Painel tático" não quebra em duas linhas */
     transition: color 0.2s ease;
 }
 .links-menu a:hover { color: var(--vermelho-texto); }
 
 .inicio {
     text-align: center;
-    min-height: calc(100vh - var(--altura-cabecalho-topo));
+    min-height: calc(100vh - var(--altura-cabecalho));
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 32px 40px;
     /* Os links para #home voltam ao topo real da página, sem o cabeçalho cobrir o início */
-    scroll-margin-top: var(--altura-cabecalho-topo);
+    scroll-margin-top: var(--altura-cabecalho);
 }
 
 .escudo-inicio {
     width: 100px;
-    height: auto;
     margin: 0 auto 20px;
 }
 
@@ -160,7 +158,6 @@ h1, h2, h3 {
 }
 .descricao-inicio {
     font-size: clamp(18px, 2.2vw, 23px);
-    color: var(--texto);
     max-width: 720px;
     margin: 0 auto 28px;
 }
@@ -171,7 +168,6 @@ h1, h2, h3 {
     flex-wrap: wrap;
 }
 
-.secao { padding: 48px 0; }
 .fundo-alternado { background-color: var(--fundo-alternado); }
 .titulo-secao {
     text-align: center;
@@ -179,21 +175,20 @@ h1, h2, h3 {
     margin: 0 auto 36px;
 }
 .titulo-secao h2 { font-size: clamp(30px, 4vw, 42px); font-weight: 700; margin-bottom: 16px; }
-.titulo-secao p { color: var(--texto); font-size: 17px; margin: 0; }
+.titulo-secao p { font-size: 17px; margin: 0; }
 
 .titulo-solucao {
     text-align: left;
     max-width: none;
     margin: 0;
 }
-.titulo-solucao h2 { color: var(--vermelho); }
+.titulo-solucao h2 { color: var(--vermelho-texto); }
 .texto-solucao {
     max-width: 720px;
     text-align: left;
     margin-top: 24px;
 }
 .texto-solucao p {
-    color: var(--texto);
     font-size: 17px;
     margin: 0 0 18px;
 }
@@ -206,12 +201,7 @@ h1, h2, h3 {
     align-items: center;
 }
 .caixa-imagem-app { order: 2; display: flex; align-items: center; justify-content: center; }
-.imagem-app { height: 360px; width: auto; max-width: 100%; display: block; filter: drop-shadow(0 26px 55px rgba(0, 0, 0, 0.6)); transition: transform 0.4s ease; }
-/* Inclinação do celular seguindo o mouse: o script.js define o ângulo em --giro-x e --giro-y */
-.caixa-imagem-app.inclinando .imagem-app {
-    transform: perspective(800px) rotateX(var(--giro-x)) rotateY(var(--giro-y));
-    transition: transform 0.1s ease-out;
-}
+.imagem-app { height: 360px; width: auto; filter: drop-shadow(0 26px 55px rgba(0, 0, 0, 0.6)); }
 .grade-funcoes {
     order: 1;
     display: grid;
@@ -244,9 +234,8 @@ h1, h2, h3 {
     max-width: none;
     margin: 0 0 20px;
 }
-.titulo-painel h2 { color: var(--vermelho); }
+.titulo-painel h2 { color: var(--vermelho-texto); }
 .texto-painel > p {
-    color: var(--texto);
     font-size: 17px;
     margin: 0 0 22px;
 }
@@ -259,7 +248,6 @@ h1, h2, h3 {
     gap: 16px;
 }
 .lista-painel li {
-    color: var(--texto);
     font-size: 15px;
     line-height: 1.55;
     padding-left: 22px;
@@ -275,7 +263,7 @@ h1, h2, h3 {
     border-radius: 50%;
     background: var(--vermelho);
 }
-.lista-painel strong { color: var(--texto); font-weight: 600; }
+.lista-painel strong { font-weight: 600; }
 .caixa-imagem-painel { display: flex; justify-content: center; }
 /* O fundo da imagem já é a cor do site. As bordas da direita e de baixo, onde o monitor
    aparece cortado na imagem original, se esfumam no fundo para o corte não aparecer */
@@ -346,11 +334,11 @@ h1, h2, h3 {
     margin-bottom: 18px;
     white-space: nowrap; /* "1 a cada 2" não quebra em duas linhas */
 }
-.cartao-estatistica p { color: var(--texto); font-size: 16px; line-height: 1.65; margin: 0; }
+.cartao-estatistica p { font-size: 16px; line-height: 1.65; margin: 0; }
 
 .secao-objetivos { background: var(--fundo-alternado); }
 .titulo-objetivos { margin-bottom: 28px; }
-.titulo-objetivos h2 span { color: var(--vermelho); }
+.titulo-objetivos h2 span { color: var(--vermelho-texto); }
 .grade-objetivos {
     display: grid;
     grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
@@ -375,9 +363,6 @@ h1, h2, h3 {
     border: 1px solid var(--borda);
     border-radius: 10px;
     padding: 18px;
-    color: var(--texto);
-    font-family: inherit;
-    text-align: left;
     transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .cartao-smart:last-child { grid-column: 1 / -1; }
@@ -407,6 +392,11 @@ h1, h2, h3 {
 .cartao-smart:focus-visible .frente-smart { opacity: 0; transition: opacity 0.15s ease; }
 .cartao-smart:hover .verso-smart,
 .cartao-smart:focus-visible .verso-smart { opacity: 1; transition: opacity 0.2s ease 0.12s; }
+/* No celular não há mouse: o toque no cartão mostra a explicação até tocar em outro lugar */
+@media (hover: none) {
+    .cartao-smart:focus .frente-smart { opacity: 0; transition: opacity 0.15s ease; }
+    .cartao-smart:focus .verso-smart { opacity: 1; transition: opacity 0.2s ease 0.12s; }
+}
 .letra-smart { color: var(--vermelho-texto); font-size: 28px; font-weight: 800; line-height: 1; flex-shrink: 0; }
 .nome-smart { font-size: 16px; font-weight: 700; }
 
@@ -457,7 +447,6 @@ h1, h2, h3 {
     transition: background 0.3s ease, border-color 0.3s ease;
 }
 .data-marco {
-    color: var(--texto);
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -489,7 +478,6 @@ h1, h2, h3 {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
-    position: relative;
 }
 .cartao-fase {
     min-height: 210px;
@@ -497,8 +485,6 @@ h1, h2, h3 {
     background: var(--vermelho);
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 12px;
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
@@ -521,18 +507,17 @@ h1, h2, h3 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 14px;
     min-width: 0;
     transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .cartao-pessoa:hover { border-color: var(--borda-forte); transform: translateY(-4px); }
 .cargo-pessoa { color: var(--vermelho-texto); display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.25; text-transform: uppercase; }
 .cartao-pessoa h3 { font-size: 17px; margin-top: 5px; }
-.cartao-orientador { max-width: 430px; margin: 0 auto; justify-content: center; }
+.cartao-orientador { max-width: 430px; margin: 0 auto; }
 .cartao-orientador h3 { font-size: 22px; }
 .grade-lideranca { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 720px; margin: 14px auto 0; }
 .grade-membros { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 14px; }
-.grade-membros .cartao-pessoa { width: calc((100% - 42px) / 4); flex-direction: column; align-items: center; text-align: center; min-height: 84px; justify-content: center; }
+.grade-membros .cartao-pessoa { width: calc((100% - 42px) / 4); flex-direction: column; min-height: 84px; }
 .grade-membros .cartao-pessoa h3 { font-size: 16px; }
 
 .tela-cheia {
@@ -571,9 +556,8 @@ h1, h2, h3 {
     font-weight: 800;
     font-size: 17px;
     letter-spacing: 0;
-    color: var(--texto);
 }
-.marca-rodape p { color: var(--texto); font-size: 13px; line-height: 1.5; margin: 4px 0 0; }
+.marca-rodape p { font-size: 13px; line-height: 1.5; margin: 4px 0 0; }
 /* Menu do rodapé na vertical, em duas colunas: os links descem até 4 e continuam na coluna ao lado */
 .links-rodape { display: grid; grid-auto-flow: column; grid-template-rows: repeat(4, auto); gap: 6px 32px; }
 .links-rodape a { color: var(--texto); text-decoration: none; font-size: 13px; transition: color 0.2s ease; }
@@ -588,32 +572,7 @@ h1, h2, h3 {
     padding-top: 12px;
     border-top: 1px solid var(--borda);
 }
-.base-rodape p { color: var(--texto); font-size: 12px; margin: 0; }
-
-/* Botão flutuante de voltar ao topo: o script.js coloca "aparecer" depois que a página é rolada */
-.botao-topo {
-    position: fixed;
-    right: 24px;
-    bottom: 24px;
-    z-index: 40;
-    width: 46px;
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: var(--vermelho);
-    color: #fff;
-    font-size: 22px;
-    text-decoration: none;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    opacity: 0;
-    transform: translateY(12px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
-}
-.botao-topo.aparecer { opacity: 1; transform: none; pointer-events: auto; }
-.botao-topo:hover { background: var(--vermelho-hover); }
+.base-rodape p { font-size: 12px; margin: 0; }
 
 /* Tela de abertura: só aparece quando o JavaScript está ativo (classe "js" no <html>).
    Ela some sozinha pelo CSS, então nunca fica travada na frente da página */
@@ -698,14 +657,21 @@ h1, h2, h3 {
 .visivel .cartao-funcao:nth-child(4), .visivel .lista-painel li:nth-child(4) { transition-delay: 0.6s; }
 .visivel .cartao-funcao:nth-child(5) { transition-delay: 0.7s; }
 
-@media (max-width: 860px) {
+/* Abaixo de 960px os links do menu não cabem numa linha ao lado da logo, então somem */
+@media (max-width: 960px) {
     .links-menu { display: none; }
+}
+
+@media (max-width: 860px) {
     .grade-estatisticas { grid-template-columns: 1fr; }
     .grade-objetivos { grid-template-columns: 1fr; }
     .grade-smart { grid-template-columns: 1fr; }
     .cartao-smart:last-child { grid-column: auto; }
-    .botao-topo { right: 16px; bottom: 16px; }
     .grade-fases { grid-template-columns: 1fr 1fr; }
+    /* No celular os cartões ficam empilhados e a linha do tempo não bate com eles, então ela some
+       e os cartões aparecem direto (a animação deles depende da linha) */
+    .linha-tempo { display: none; }
+    .js .linha-tempo:not(.concluida) + .grade-fases .cartao-fase { opacity: 1; transform: none; }
     .grade-membros .cartao-pessoa { width: calc((100% - 14px) / 2); min-height: 0; }
     .inicio { padding: 40px 24px; }
     .escudo-inicio { width: 90px; margin-bottom: 22px; }
@@ -725,10 +691,12 @@ h1, h2, h3 {
     .grade-lideranca { grid-template-columns: 1fr; }
     .cartao-pessoa, .grade-membros .cartao-pessoa { flex-direction: row; text-align: left; justify-content: flex-start; min-height: 0; }
     .grade-membros .cartao-pessoa { width: 100%; }
+    .descricao-inicio br { display: none; } /* no celular o texto quebra sozinho, sem a quebra fixa */
 }
 
 /* Quem desativou animações no sistema entra direto na página e vê o cartão trocar de texto e a linha do tempo cheia, sem movimento */
 @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; } /* os links do menu pulam direto para a seção, sem deslizar */
     .frente-smart,
     .verso-smart,
     .progresso-linha-tempo,

@@ -67,15 +67,11 @@ function quandoAberturaTerminar(acao) {
 
 // Elementos que mudam conforme a página é rolada
 const cabecalho = document.querySelector('.cabecalho');
-const botaoTopo = document.querySelector('.botao-topo');
 const barraProgresso = document.querySelector('.barra-progresso');
 
 function atualizarAoRolar() {
-    // O cabeçalho fica compacto e com sombra quando a pessoa sai do início
+    // O cabeçalho ganha sombra quando a pessoa sai do início
     cabecalho.classList.toggle('rolado', window.scrollY > 60);
-
-    // O botão de voltar ao topo aparece depois de rolar quase uma tela inteira
-    botaoTopo.classList.toggle('aparecer', window.scrollY > window.innerHeight * 0.8);
 
     // Barra de progresso: quanto da página já foi rolado, de 0 a 1
     const totalRolavel = document.documentElement.scrollHeight - window.innerHeight;
@@ -108,24 +104,4 @@ if ('IntersectionObserver' in window) {
     observadorLinha.observe(linhaTempo);
 } else {
     linhaTempo.classList.add('ativa', 'concluida');
-}
-
-// Celular que inclina seguindo o mouse, só em telas com mouse e sem animações desativadas
-const caixaApp = document.querySelector('.caixa-imagem-app');
-const temMouse = window.matchMedia('(hover: hover)').matches;
-
-if (temMouse && !reduzirMovimento) {
-    caixaApp.addEventListener('mousemove', (evento) => {
-        // Posição do mouse dentro da imagem, de -0,5 (esquerda/topo) a 0,5 (direita/baixo)
-        const area = caixaApp.getBoundingClientRect();
-        const x = (evento.clientX - area.left) / area.width - 0.5;
-        const y = (evento.clientY - area.top) / area.height - 0.5;
-
-        caixaApp.style.setProperty('--giro-y', `${x * 16}deg`);
-        caixaApp.style.setProperty('--giro-x', `${-y * 16}deg`);
-        caixaApp.classList.add('inclinando');
-    });
-
-    // Quando o mouse sai, o celular volta devagar para a posição normal
-    caixaApp.addEventListener('mouseleave', () => caixaApp.classList.remove('inclinando'));
 }

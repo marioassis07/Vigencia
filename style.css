@@ -10,7 +10,7 @@
     --vermelho:        #8d0e0e; /* cor do escudo: usada nos fundos, botões, cartões e barras */
     --vermelho-hover:  #a81616; /* um pouco mais claro, para o hover dos fundos vermelhos */
     --vermelho-texto:  #eb3b3b; /* mesmo vermelho, mais claro, para textos ficarem legíveis no fundo escuro */
-    --vermelho-titulo: #ff0000; /* vermelho puro, só para os títulos */
+    --vermelho-titulo: #ff1a1a; /* vermelho vivo, 10% mais claro que o puro, só para os títulos */
     --largura-max:      1120px;
     --arredondamento:   14px;
     --altura-cabecalho: 55px; /* altura do cabeçalho fixo no topo */
